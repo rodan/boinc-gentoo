@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#/sbin/ip addr add 10.212.1.2/24 brd 10.212.1.255 dev wlan0
+#/sbin/ip link set wlan0 up
+#/sbin/iwconfig wlan0 mode Managed essid nyleve channel 1
+#/sbin/ip link set eth0 down
+
+#openvpn --daemon --config /etc/openvpn/simplex_w_notoken.conf
+
+sysctl -w net.ipv6.conf.wlan0.accept_dad=0
+
+wdev="wlan0"
+wpa_supplicant -B -i ${wdev} -c /etc/wpa_supplicant/wpa_supplicant.conf && sleep 2 && sysctl -w net.ipv6.conf.wlan0.accept_ra=2 && dhcpcd --noipv4ll ${wdev} --metric 200
+
+echo none > /sys/class/leds/ath9k_htc-phy0/trigger
+

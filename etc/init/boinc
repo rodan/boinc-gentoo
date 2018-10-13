@@ -1,0 +1,68 @@
+#!/bin/bash
+
+use_tmpfs=true
+
+can_use_tmpfs()
+{
+    memtotal=`grep 'MemTotal:' /proc/meminfo | awk '{ print $2 }'`
+    [ ${memtotal} -gt 32000000 ]
+}
+
+sync_to_disk()
+{
+    mount | grep -q '/var/lib/boinc type tmpfs' && rsync -a --delete /var/lib/boinc/ /var/lib/boinc_drive/
+    sync
+}
+
+check_env_setup()
+{
+
+    groupmod cvmfs 2>/dev/null || {
+        groupadd cvmfs
+        useradd -s /sbin/nologin -d /var/emtpy -G cvmfs -g cvmfs cvmfs
+    }
+
+    [ ! -e /etc/auto.cvmfs ] && ln -s /usr/libexec/cvmfs/auto.cvmfs /etc/auto.cvmfs
+
+}
+
+. /etc/init/functs.sh
+
+cd /var/lib/boinc
+
+
+
+if [ "$1" == "start" ]; then
+    ebegin "boinc"
+    svcinit boinc status | grep -q ": up" && {
+        echo 'error: boinc is already started, exiting'
+        exit 1
+    }
+    check_env_setup
+    if ${use_tmpfs} && can_use_tmpfs; then
+        umount -f /var/lib/boinc &>/dev/null
+        mount -t tmpfs -o nosuid,nodev,mode=755,uid=boinc,gid=boinc,size=24g tmpfs /var/lib/boinc && \
+            rsync -a --delete /var/lib/boinc_drive/ /var/lib/boinc/ && {
+                svcinit boinc start
+            }
+    else
+        mount -o bind /var/lib/boinc_drive/ /var/lib/boinc/ && {
+            svcinit boinc start
+        }
+    fi
+elif [ "$1" == "stop" ]; then
+    ebegin "stop boinc"
+    svcinit boinc status | grep -q ": down" && {
+        echo 'error: boinc is already stopped, exiting'
+        exit 1
+    }
+    boinccmd --host 127.0.0.1 --passwd 1234 --quit
+    svcinit boinc stop
+    killall boinctui-extended 2>/dev/null
+    sleep 3
+    sync_to_disk
+    umount -f /var/lib/boinc
+elif [ "$1" == "sync" ]; then
+    sync_to_disk
+fi
+

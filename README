@@ -1,0 +1,11 @@
+
+Gentoo system setup for a boinc client application
+
+it includes support for NVidia GeForce GPU, cvmfs and singularity for LHC@home new native_mt test application and virtualbox for virtualized simulations.
+
+AUTHORS
+    Petre Rodan <2b4eda@subdimension.ro>
+
+COPYRIGHT
+    the bundled code is under a BSD license. do whatever you want with it.
+

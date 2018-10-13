@@ -1,0 +1,164 @@
+
+# kernel
+sys-kernel/vanilla-sources
+sys-kernel/grsec-sources
+sys-kernel/linux-headers
+
+sys-apps/blktool
+
+=games-server/halflife-steam-2.0 **
+
+media-tv/ivtv-firmware
+www-client/firefox-bin
+www-client/firefox
+
+dev-embedded/arduino
+app-admin/amazon-ec2-init
+
+www-plugins/lightspark
+app-crypt/ekeyd 
+
+mail-client/mutt
+
+media-video/mkvtoolnix
+media-libs/libmatroska
+dev-libs/libebml
+
+media-tv/ivtv-utils
+media-tv/v4l2-ctl
+
+#x11-drivers/nvidia-drivers
+#media-video/nvidia-settings
+
+x11-libs/libvdpau
+
+app-crypt/truecrypt
+net-misc/openvpn
+
+#app-admin/eselect-opengl
+
+media-tv/linuxtv-dvb-firmware
+
+sci-geosciences/googleearth
+
+net-fs/nfs-utils
+net-nds/rpcbind
+
+=app-misc/lirc-0.9.0
+=net-analyzer/wireshark-1.6.2 ~amd64
+
+net-analyzer/wireshark
+
+net-p2p/deluge
+
+#net-print/hplip
+
+media-sound/shntool
+
+games-util/steam-base
+games-util/steam-client-meta
+games-util/steam-meta
+games-util/steam-games-meta
+
+
+www-client/google-chrome
+app-text/calibre
+
+### texlive related
+
+app-text/texlive
+dev-texlive/texlive-latex
+dev-texlive/texlive-documentation-base
+dev-texlive/texlive-basic
+dev-texlive/texlive-fontsrecommended
+dev-texlive/texlive-genericrecommended
+dev-texlive/texlive-fontutils
+dev-texlive/texlive-latexrecommended
+dev-texlive/texlive-texinfo
+dev-texlive/texlive-pictures
+dev-texlive/texlive-latexextra
+dev-texlive/texlive-texinfo
+dev-texlive/texlive-bibtexextra
+app-text/texlive-core
+dev-tex/luatex
+dev-libs/kpathsea
+app-text/dvipsk
+dev-tex/bibtexu
+app-text/ps2pkm
+dev-tex/biblatex
+dev-tex/biber
+
+dev-tex/latex-beamer
+app-text/xdvik
+app-text/ttf2pk2
+app-text/teckit
+
+dev-tex/pgf
+
+#######
+
+net-p2p/freenet
+
+net-p2p/vuze
+net-p2p/vuze-coreplugins
+dev-java/swt
+
+cross-avr/binutils * -x86 -~x86
+cross-avr/gcc * -x86 -~x86
+cross-avr/avr-libc * -x86 -~x86
+cross-avr/gdb * ~* -x86 -~x86
+cross-avr/insight * ~* -x86 -~x86
+
+=cross-msp430/msp430-binutils-2.22_p20120911 **
+=cross-msp430/msp430-gcc-4.7.0_p20120911 **
+=cross-msp430/msp430mcu-20120716 **
+=cross-msp430/msp430-libc-20120716 **
+
+sys-fs/eudev
+
+
+media-sound/teamspeak-client-bin
+
+media-gfx/gphotofs ~amd64
+
+net-misc/googlecl ~amd64
+
+#media-gfx/darktable ~amd64
+
+sci-geosciences/mkgmap
+
+net-dialup/minicom
+
+sci-electronics/ngspice
+
+dev-db/percona-server
+
+app-emulation/winetricks
+
+net-misc/netcf
+sci-electronics/eagle
+
+net-im/skype
+media-sound/apulse
+
+=dev-embedded/bitbake-9999 **
+sys-fs/dmg2img
+
+net-misc/strongswan
+
+sys-boot/syslinux
+
+
+dev-util/kbuild
+sci-misc/boinc
+dev-util/nvidia-cuda-toolkit
+x11-drivers/nvidia-drivers
+app-emulation/virtualbox
+app-emulation/virtualbox-modules
+app-emulation/virtualbox-extpack-oracle
+
+sys-cluster/singularity
+net-fs/cvmfs
+net-libs/pacparser
+
+

@@ -1,0 +1,282 @@
+
+sys-boot/grub efi-64 pc 
+media-gfx/imagemagick bzip2 zlib
+sys-apps/util-linux crypt slang
+sys-devel/gcc java gcj
+media-gfx/gimp -sse -mmx
+
+media-video/mplayer dts win32codecs dvd -encode aac cpudetection cdparanoia dga dv iconv mad mmxext mp2 mp3 musepack nvidia openal pnm rar radio real rtc speex srt tga theora xanim xvid xvmc v4l v4l2 vidix vorbis x264 xscreensaver xv vdpau encode
+www-plugins/gnash ffmpeg nsplugin sdl-sound
+www-plugins/lightspark  ffmpeg nsplugin
+media-libs/speex ogg
+media-libs/xine-lib a52 amr dts opengl mp3 vcd vidix win32codecs aac asf mad xv flac vorbis speex theora xcb
+media-video/vlc a52 cdda cddb cdio dts ffmpeg mp3 mpeg ogg oss -qt4 speex stream theora v4l vcd vorbis win32codecs x264 httpd id3tag matroska sdl-image taglib vcdinfo avcodec avformat swscale postproc lua
+media-video/lives matroska ogg
+media-sound/cmus examples mad mp4 wma
+media-sound/sox alsa flac mad oss png encode ffmpeg id3tag ogg wavpack
+
+
+www-plugins/adobe-flash abi_x86_64 64bit 
+sys-apps/kmod tools
+
+mail-mta/postfix sasl
+
+net-im/pidgin -gnutls
+net-im/centericq  aim crypt icq irc jabber -lj msn -nls rss ssl yahoo
+net-im/skype pulseaudio
+media-sound/pulseaudio dbus udev qt4
+
+app-emulation/wine abi_x86_64 abi_x86_32 win32 win64
+app-emulation/emul-linux-x86-opengl development
+app-emulation/emul-linux-x86-soundlibs development
+app-emulation/emul-linux-x86-xlibs development
+app-emulation/emul-linux-x86-baselibs development
+
+net-ftp/lftp openssl
+dev-libs/openssl asm
+
+media-video/ffmpeg a52 dts encode imlib network ogg x264 xvid vdpau gpl
+virtual/ffmpeg encode x264 vdpau
+media-video/avidemux encode xvid dts x264
+media-libs/flac ogg cxx
+dev-lang/spidermonkey threadsafe
+
+net-analyzer/wireshark pcap pcre gtk3
+
+app-text/texlive-core xetex
+
+app-misc/mc 7zip slang -ncurses
+
+media-libs/libgphoto2 canon
+
+media-libs/alsa-lib midi
+media-sound/ecasound alsa ncurses vorbis -audiofile jack -sndfile
+
+media-libs/libtheora encode
+dev-java/sun-jre-bin nsplugin
+dev-java/ibm-jre-bin nsplugin
+dev-java/oracle-jre-bin nsplugin
+dev-java/icedtea-bin nsplugin awt
+dev-java/icedtea-web nsplugin icedtea7
+
+app-misc/lirc debug
+
+x11-libs/qt mysql
+dev-libs/libgpg-error static-libs
+
+dev-java/antlr java
+dev-embedded/arduino java
+
+dev-libs/libxml2 python
+
+app-text/poppler xpdf-headers utils png lcms
+
+app-portage/layman git subversion cvs
+dev-vcs/git python
+
+sys-fs/cryptsetup openssl
+
+dev-libs/popt static-libs
+
+www-servers/apache mpm-prefork no-suexec -pam
+app-crypt/gnupg bzip2 ecc idea
+net-irc/irssi socks5
+net-nds/openldap sasl
+sys-libs/ncurses -gpm
+net-mail/courier-imap -berkdb
+net-libs/courier-authlib  -berkdb -ldap -mysql -pam -postgres
+mail-filter/dspam -mysql procmail
+net-misc/openvpn examples lzo plugins
+#sys-kernel/vanilla-sources symlink
+x11-base/xorg-x11 opengl pam xv bitmap-fonts truetype-fonts type1-fonts
+sys-fs/xfsprogs -nls
+mail-client/muttng gpgme smtp pop slang
+mail-client/mutt berkdb crypt gdbm imap ssl gpg gpgme pop sasl smtp sidebar
+net-firewall/ipsec-tools  -idea -ipv6 -pam -rc5 -readline
+dev-perl/gtk-perl -opengl gnome
+mail-filter/dspam -berkdb -mysql -postgres -clamav
+net-nds/gq -jpeg
+media-sound/amarok -gstreamer -musicbrainz visualization flac mp3 vorbis xine 
+x11-misc/xplanet opengl
+app-crypt/openca dbm
+media-sound/easytag flac mp3 vorbis
+dev-util/catalyst  ccache cdr doc examples
+dev-lang/php -imap cli
+
+dev-python/imaging -scanner
+#media-gfx/gimp-print cups ppds foomaticdb
+net-print/cups acl samba gnutls filters -usb
+net-print/gutenprint cups
+net-analyzer/linkchecker -X
+net-p2p/transmission daemon
+
+media-libs/openal mp3
+media-libs/libsdl ggi dga xv joystick video audio sound
+
+x11-libs/libX11 xcb
+x11-base/xorg-server xorg suid
+x11-apps/xinit minimal
+x11-libs/cairo pdf glib
+x11-libs/libxcb xkb
+
+net-misc/ltsp X rdesktop
+net-misc/vnc server
+media-libs/libgphoto2 exif
+media-gfx/gphoto2 exif
+
+net-misc/tightvnc server
+app-accessibility/festival mbrola
+
+
+sci-electronics/kicad doc examples
+
+x11-libs/wxGTK opengl
+dev-libs/libpcre cxx pcre16
+
+dev-libs/opensc openct
+app-text/enchant aspell
+# move x11-libs/qt-sql dev-qt/qtsql
+dev-qt/qtsql sqlite
+
+dev-python/PyQt4 svg webkit
+x11-libs/pixman -sse2
+
+media-libs/freetype kpathsea
+app-text/lcdf-typetools kpathsea
+dev-tex/mplib lua
+
+dev-lang/lua deprecated
+media-libs/mesa egl classic gles2
+media-libs/harfbuzz glib
+
+dev-vcs/subversion -berkdb webdav-neon http
+
+www-client/firefox webm gstreamer
+media-libs/libpng apng
+
+x11-libs/cairo svg
+
+net-misc/openvpn pkcs11 iproute2 passwordsave
+dev-db/sqlite threadsafe extensions
+sys-apps/iproute2 iptables
+
+dev-libs/libgcrypt static-libs
+net-libs/ptlib stun
+
+dev-lang/python xml sqlite ncurses tk
+
+sys-fs/squashfs-tools xattr gzip lzma lzo lz4 xz
+
+dev-libs/nss utils
+
+sys-libs/zlib minizip
+www-servers/nginx ssl pcre http vim-syntax
+
+net-fs/samba caps pam readline client netapi server smbclient
+
+media-gfx/hugin sift
+app-forensics/aide mhash -curl
+
+net-fs/nfs-utils nfsv3
+
+dev-java/swt cairo xulrunner
+
+net-libs/rb_libtorrent python
+dev-libs/boost python eselect tools
+net-p2p/deluge gtk webinterface
+# move x11-libs/qt-core dev-qt/qtcore
+dev-qt/qtcore exceptions
+
+cross-avr/binutils -openmp -selinux
+cross-avr/avr-libc -openmp -selinux
+cross-avr/gcc hardened -fortran -openmp -selinux -boundschecking -d -gtk -gcj -libffi -mudflap -objc -objc++ -objc-gc
+
+sys-libs/glibc gd
+net-analyzer/mtr -gtk
+
+sys-fs/lvm2 udev
+sys-fs/eudev hwdb
+
+sys-libs/talloc python
+
+dev-qt/qtgui accessibility dbus xcb
+dev-libs/quazip qt5
+dev-qt/qtsql sqlite
+dev-qt/qtgui accessibility
+
+media-plugins/alsa-plugins ffmpeg
+
+media-gfx/exiv2 xmp
+media-gfx/darktable web-services graphicsmagick gphoto2
+
+net-wireless/bluez udev
+
+sys-apps/hwids usb net pci udev
+
+#sci-electronics/gspiceui examples schematics waveform
+sci-electronics/gspiceui examples schematics
+dev-scheme/guile deprecated networking regex threads
+
+
+media-libs/harfbuzz graphite icu
+
+app-crypt/qca doc examples gpg logger openssl pkcs11
+dev-db/percona-server extraengine
+
+media-fonts/terminus-font pcf
+dev-libs/nettle gmp
+
+
+app-emulation/qemu aio vhost-net gtk ncurses spice sdl curl caps usbredir vnc xfs seccomp 
+net-libs/gtk-vnc python
+#x11-libs/pango introspection
+net-misc/spice-gtk python usbredir
+x11-libs/gtk+ X
+sys-fs/eudev gudev
+app-emulation/libvirt libvirtd virt-network qemu macvtap vepa
+app-emulation/libvirt-glib python
+net-dns/dnsmasq dhcp script
+
+#dev-libs/gobject-introspection cairo
+dev-python/pygobject cairo
+
+sys-kernel/linux-firmware savedconfig
+
+mail-mta/msmtp gnutls sasl ssl vim-syntax
+
+net-p2p/bitcoin-qt qt4
+
+net-misc/strongswan constraints curl dhcp eap farp gcrypt gmp openssl sqlite strongswan_plugins_blowfish strongswan_plugins_ccm strongswan_plugins_ctr strongswan_plugins_gcm strongswan_plugins_ha strongswan_plugins_ipseckey strongswan_plugins_led strongswan_plugins_lookip strongswan_plugins_ntru strongswan_plugins_rdrand strongswan_plugins_systime-fix strongswan_plugins_unity strongswan_plugins_vici strongswan_plugins_whitelist
+
+sys-process/daemontools-scripts withsamplescripts
+
+app-text/libwpd tools
+sys-devel/gdb client server
+app-text/xmlto text
+
+dev-tcltk/blt -X
+dev-lang/python -tk
+
+net-misc/iputils openssl
+dev-util/strace aio unwind
+dev-libs/nettle gmp
+sys-apps/lm_sensors sensord
+
+sci-misc/boinc cuda -X
+x11-drivers/nvidia-drivers compat driver kms uvm X
+sys-apps/elfix xtpax
+sys-apps/net-tools arp hostname
+sys-apps/shadow acl pam xattr
+sys-process/procps kill
+
+net-wireless/wpa_supplicant dbus gnutls hs2-0 p2p tdls wps
+sys-apps/smartmontools caps daemon update_drivedb
+
+app-emulation/virtualbox headless lvm udev vnc
+
+net-libs/gnutls openssl
+dev-python/pypax xtpax
+
+net-misc/curl adns -threads
+sys-cluster/singularity suid
+

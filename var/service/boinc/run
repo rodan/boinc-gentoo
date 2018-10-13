@@ -1,0 +1,71 @@
+#!/bin/sh
+
+exec 2>&1
+
+sleep 2
+
+USER="boinc"
+GROUP="boinc"
+
+# Directory with runtime data: Work units, project binaries, user info etc.
+RUNTIMEDIR="/var/lib/boinc"
+
+# Location of the boinc command line binary
+BOINCBIN="/usr/bin/boinc_client"
+
+# Location of the boinc_client pid file
+BOINC_PIDFILE="/var/run/boinc_client.pid"
+
+# Location of the boinccmd command
+BOINCCMD="/usr/bin/boinccmd"
+
+# Allow remote gui RPC yes or no
+ALLOW_REMOTE_RPC="yes"
+
+# nice level
+NICELEVEL="19"
+
+fix_lib_symlinks() {
+    local src="$1"
+    local tgt="$2"
+    # If the source does not exist, we can not do anything
+    if [ ! -f "${src}" ] ; then
+        return 1
+    fi
+    # Check whether the symlink is already there and in order
+    if [ -L "${tgt}" ] ; then
+        if [ -f "${tgt}" ] ; then
+            return 0
+        fi
+        # Remove broken symlink
+        if ! rm -f "${tgt}"; then
+            echo "Removing '${tgt}' failed!"
+            return 1
+        fi
+    fi
+
+    # symlink the correct path
+    if ! ln -snf "${src}" "${tgt}"; then
+        echo "Symlinking '${src}' to '${tgt}' failed!"
+        return 1
+    fi
+    return 0
+}
+
+
+
+mkdir -p "${RUNTIMEDIR}"
+chown "${USER}:${GROUP}" "${RUNTIMEDIR}"
+
+[ ! -e "${RUNTIMEDIR}"/ca-bundle.crt ] && ln -s /etc/ssl/certs/ca-certificates.crt "${RUNTIMEDIR}"/ca-bundle.crt
+fix_lib_symlinks "/opt/cuda/lib64/libcudart.so" "${RUNTIMEDIR}/libcudart.so" || exit 1
+fix_lib_symlinks "/usr/lib64/libOpenCL.so" "${RUNTIMEDIR}/libOpenCL.so" || exit 1
+
+if [ "${ALLOW_REMOTE_RPC}" = "yes" ]; then
+    ARGS="${ARGS} --allow_remote_gui_rpc"
+fi
+
+ARGS="${ARGS} --dir "${RUNTIMEDIR}" --redirectio"
+
+exec su --shell /bin/bash ${USER} --command "${BOINCBIN} ${ARGS}"
+

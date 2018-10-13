@@ -1,0 +1,171 @@
+#!/bin/bash
+
+trap - INT QUIT TSTP
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+. /etc/init/functs.sh
+
+rc_sysinit() {
+    INITTY=/dev/tty[1-8]
+    for tty in ${INITTY}; do
+        setleds -D -num < $tty
+    done
+
+    ebegin 'mount filesystems '
+    mount -o remount,rw /
+    [ ! -L "/etc/mtab" ] && { rm -f /etc/mtab; ln -s /proc/mounts /etc/mtab; }
+    mount -t proc -o nosuid,noexec proc /proc
+    mount /sys
+    mount /run
+
+    #udevd --daemon &>/dev/null
+    #chmod 666 /dev/bus/usb/*/*
+    #udevadm trigger --type=subsystems --action=add &
+    #udevadm trigger --type=devices &
+
+    mkdir -p /dev/shm
+    mount /dev/shm
+
+    vgchange -ay &>/dev/null
+    vgscan --mknodes &>/dev/null
+    lvscan &>/dev/null
+
+    mkdir -p /dev/pts
+    mount /dev/pts
+
+    mount -a 2>&1 | grep -v already
+
+    # dbus is needed by the usb bluetooth dongle
+    #rm -f /var/run/dbus.pid
+    #mkdir -p /var/run/dbus
+    #dbus-uuidgen --ensure &
+    #dbus-daemon --system &
+
+    ebegin 'swap'
+    swapon -a
+
+    ebegin 'tweak sysctls'
+    sysctl -q -p
+    echo noop > /sys/block/sda/queue/scheduler
+}
+
+rc_network() {
+    ebegin 'start system logger'
+    syslog-ng
+
+    ebegin 'setup networking'
+    modprobe ath9k_htc
+    hostname sunspire
+    ip addr add 127.0.0.1/32 brd 127.255.255.255 dev lo
+    ip link set lo up
+
+    # normal eth0
+    #ip link set eth0 mtu 9000
+    ip link set eth0 up
+    dhcpcd --quiet eth0 || {
+        ip link set eth0 down
+        sleep 10
+        bash /etc/init/wireless
+    }
+
+    #ethtool -s eth0 wol g
+    #ip addr add 10.212.1.2/24 brd 10.212.1.255 dev wlan0
+    #ip link set wlan0 up
+    #iwconfig wlan0 mode Managed essid nyleve channel 1
+    #openvpn --daemon --config /etc/openvpn/simplex_w_notoken.conf
+
+    ebegin 'start services'
+    rm -rf /tmp/*
+    rm -f /var/lock/LCK*
+    rm -rf /tmp/.* 2>/dev/null
+    iptables -P INPUT DROP
+    iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+    modprobe vboxdrv
+    modprobe asus_atk0110
+    modprobe it87
+    svscanboot &
+    /usr/libexec/fcron
+    #freshclam -d
+    cat /var/run/random-seed > /dev/urandom 2>/dev/null
+    dd if=/dev/urandom of=/var/run/random-seed count=1 &> /dev/null
+    ntpdate 0.europe.pool.ntp.org &>/dev/null
+    hwclock --systohc
+    #ntpd -u ntp:ntp
+    #cpufreqd
+    #echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    #echo "ondemand" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+    #hdparm -q -S242 /dev/sdb
+
+    ebegin 'start firewall'
+    sysctl -q -w net.ipv4.ip_forward=0
+    shorewall start 2>&1 >/dev/null
+    #iptables-restore < /var/lib/iptables/rules
+
+    ebegin 'start desktop related apps'
+    acpid
+    sensors -s
+    kbdrate -s -r 30 -d 250
+
+    # fix perms
+    chown root:vboxusers /dev/vboxdrv*
+    chmod 660 /dev/vboxdrv*
+
+    /etc/init/boinc start
+}
+
+rc_nonetwork() {
+    ebegin 'start system logger'
+    syslog-ng
+}
+
+rc_shutdown() {
+    ebegin 'save hwclock'
+    hwclock --systohc --utc
+    ebegin 'save random seed'
+    dd if=/dev/urandom of=/var/run/random-seed count=1 &> /dev/null
+    /etc/init/boinc stop
+    ebegin 'send sigterm and sigkill'
+    killall5 -15
+    sleep 2
+    killall5 -9 
+    ebegin 'unmount filesystems'
+    umount /home
+    umount /var
+    umount /local
+    #cryptsetup luksClose crypt-home
+    #truecrypt -d
+    umount -al &>/dev/null
+    mount | grep '/dev/sd[a-z]' | awk '{ print $1 }' | while read part; do mount -o remount,ro "${part}"; done
+}
+
+case "$1" in 
+    sysinit )
+        rc_sysinit
+        ;;
+    single )
+        rc_nonetwork
+        ;;
+    default )
+        rc_network
+        ;;
+    boot )
+        :
+        ;;
+    nonetwork )
+        rc_nonetwork
+        ;;
+    network )
+        rc_network
+        ;;
+    reboot )
+        rc_shutdown
+        #halt -p
+        reboot -hf
+        ;;
+    shutdown )
+        rc_shutdown
+        halt -hp
+        ;;
+esac
+
+
